@@ -56,7 +56,7 @@ exports.scores = function(req, res){
                                     {
                                         //text += my_picts[i].name + " " + my_picts[i].rating + "<br>";
                                         text += "<tr>";
-                                        text += "<td align='center'><img src='" + my_picts[i].imgpath + "' height='30px'></td>";
+                                        text += "<td align='center'><img src='" + my_picts[i].imgpath + "' height='150px'></td>";
                                         text += "<td>" + my_picts[i].name + "</td>";
                                         text += "<td>" + my_picts[i].rating + "</td>";
                                         text += "</tr>";

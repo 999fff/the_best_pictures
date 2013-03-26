@@ -62,9 +62,9 @@ exports.fight = function(req, res){
                         text += "<td align='center'>" + my_picts[ind2].rating + " pts.</td>";
                         text += "</tr>";
                         text += "<tr>";
-                        text += "<td align='center'>" + "<img src='" + my_picts[ind1].imgpath + "' height='30px'>" + "</td>";
+                        text += "<td align='center'>" + "<img src='" + my_picts[ind1].imgpath + "' height='300px'>" + "</td>";
                         text += "<td></td>";
-                        text += "<td align='center'>" + "<img src='" + my_picts[ind2].imgpath + "' height='30px'>" + "</td>";
+                        text += "<td align='center'>" + "<img src='" + my_picts[ind2].imgpath + "' height='300px'>" + "</td>";
                         text += "</tr>";
                         text += "<tr>";
                         text += "<td align='center'>" + "<font size='5'><a href=\"/votefor/"+my_picts[ind1]._id+"/"+my_picts[ind1].rating+"/"+my_picts[ind2]._id+"/"+my_picts[ind2].rating+"\">This!</a> " + "</font></td>";
