@@ -33,51 +33,53 @@ exports.votefor = function(req, res){
 
     jint++;
 
-    mongoose.connect('mongodb://localhost:27017/the_best_pictures'); // ?poolSize=4');   // example ('mongodb://user:pass@localhost:port/database');
+    // ?poolSize=4');   // example ('mongodb://user:pass@localhost:port/database');
     //poolSize is reserved connections for application
-
-    var db = mongoose.connection;
-
-    db.on('error', console.error.bind(console, 'connection error:'));
-    db.once('open', function(err)
+    mongoose.connect('mongodb://localhost:27017/the_best_pictures', function()
     {
-        if (!err)
+        var db = mongoose.connection;
+
+        db.on('error', console.error.bind(console, 'connection error:'));
+        db.once('open', function(err)
         {
-            var query1 = { _id: winner };
-            picts.update(query1,{rating : winpts},function(err, upd_cnt1)
-            //girls.findOneAndUpdate(query1,{rating : winpts},function(err, upd_cnt1)
+            if (!err)
             {
-                if (upd_cnt1 > 0)
+                var query1 = { _id: winner };
+                picts.update(query1,{rating : winpts},function(err, upd_cnt1)
+                    //girls.findOneAndUpdate(query1,{rating : winpts},function(err, upd_cnt1)
                 {
-                    var query2 = { _id: loser };
-                    picts.update(query2,{rating : losepts},function(err, upd_cnt2)
-                    //girls.findOneAndUpdate(query2,{rating : losepts},function(err, upd_cnt2)
+                    if (upd_cnt1 > 0)
                     {
-                        if (upd_cnt2 > 0)
+                        var query2 = { _id: loser };
+                        picts.update(query2,{rating : losepts},function(err, upd_cnt2)
+                            //girls.findOneAndUpdate(query2,{rating : losepts},function(err, upd_cnt2)
                         {
-                            text += "Views: " + jint + "<br>";
-                            text += "Thank you for voting!";
-                            text += "<br> <a href=\"/\">one more time!</a><br>";
-                            db.close();
+                            if (upd_cnt2 > 0)
+                            {
+                                text += "Views: " + jint + "<br>";
+                                text += "Thank you for voting!";
+                                text += "<br> <a href=\"/\">one more time!</a><br>";
+                                db.close();
 
-                            //res.send(text);
+                                //res.send(text);
 
-                            // redirect
-                            res.redirect("/");
-                        } else
-                        {
-                            console.log("shlyapa, upd_cnt2 == 0, id: ijf2093j0f92j3f092j0932jf");
-                            db.close();
-                            res.redirect("/");
-                        }
-                    });
-                } else
-                {
-                    console.log("shlyapa, upd_cnt1 == 0, id: ijf2093j0f92j3f092j0932jf");
-                    db.close();
-                    res.redirect("/");
-                }
-            });
-        }
+                                // redirect
+                                res.redirect("/");
+                            } else
+                            {
+                                console.log("shlyapa, upd_cnt2 == 0, id: ijf2093j0f92j3f092j0932jf");
+                                db.close();
+                                res.redirect("/");
+                            }
+                        });
+                    } else
+                    {
+                        console.log("shlyapa, upd_cnt1 == 0, id: ijf2093j0f92j3f092j0932jf");
+                        db.close();
+                        res.redirect("/");
+                    }
+                });
+            }
+        });
     });
 };

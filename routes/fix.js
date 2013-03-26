@@ -18,32 +18,34 @@ exports.fix = function(req, res){
 
     jint++;
 
-    mongoose.connect('mongodb://localhost:27017/the_best_pictures'); // ?poolSize=4');   // example ('mongodb://user:pass@localhost:port/database');
+    // ?poolSize=4');   // example ('mongodb://user:pass@localhost:port/database');
     //poolSize is reserved connections for application
-
-    var db = mongoose.connection;
-
-    db.on('error', console.error.bind(console, 'connection error:'));
-    db.once('open', function(err)
+    mongoose.connect('mongodb://localhost:27017/the_best_pictures', function()
     {
-        if (!err)
+        var db = mongoose.connection;
+
+        db.on('error', console.error.bind(console, 'connection error:'));
+        db.once('open', function(err)
         {
-            var query = { name: 'Alena' };
-            var pts = 1200+13+13-13-13;
-
-            picts.update(query,{rating : pts},function(err, upd_cnt)
+            if (!err)
             {
-                if (upd_cnt > 0)
-                {
-                    text += "Views: " + jint + "<br>";
-                    text += "Thank you for fixing!";
-                    text += "<br> <a href=\"/\">one more time!</a><br>";
-                    db.close();
+                var query = { name: 'Alena' };
+                var pts = 1200+13+13-13-13;
 
-                    res.send(text);
-                } else
-                    console.log("shlyapa, upd_cnt == 0, id: ijf2093j0f92j3f092j0932jf");
-            });
-        }
+                picts.update(query,{rating : pts},function(err, upd_cnt)
+                {
+                    if (upd_cnt > 0)
+                    {
+                        text += "Views: " + jint + "<br>";
+                        text += "Thank you for fixing!";
+                        text += "<br> <a href=\"/\">one more time!</a><br>";
+                        db.close();
+
+                        res.send(text);
+                    } else
+                        console.log("shlyapa, upd_cnt == 0, id: ijf2093j0f92j3f092j0932jf");
+                });
+            }
+        });
     });
 };

@@ -38,25 +38,12 @@ exports.add1 = function(req, res){
 
     jint++;
 
-    mongoose.connect('mongodb://localhost:27017/the_best_pictures'); // ?poolSize=4');   // example ('mongodb://user:pass@localhost:port/database');
-    //poolSize is reserved connections for application
+    text += "<form action='/getfile' method='post' enctype='multipart/form-data'>";
+    text += "Add new picture<br>";
+    text += "<input name='name' type='text' ></input> <br>"
+    text += "<input name='image' type='file' ></input> <br>"
+    text += "<input type='submit' value='send'>";
+    text += "</form>" + "<br>";
 
-    var db = mongoose.connection;
-
-    db.on('error', console.error.bind(console, 'connection error:'));
-    db.once('open', function(err)
-    {
-        if (!err)
-        {
-            text += "<form action='/getfile' method='post' enctype='multipart/form-data'>";
-            text += "Add new picture<br>";
-            text += "<input name='name' type='text' ></input> <br>"
-            text += "<input name='image' type='file' ></input> <br>"
-            text += "<input type='submit' value='send'>";
-            text += "</form>" + "<br>";
-
-            res.send(text);
-            db.close();
-        }
-    });
+    res.send(text);
 };

@@ -38,51 +38,53 @@ exports.add_random = function(req, res){
 
     jint++;
 
-    mongoose.connect('mongodb://localhost:27017/the_best_pictures'); // ?poolSize=4');   // example ('mongodb://user:pass@localhost:port/database');
+    // ?poolSize=4');   // example ('mongodb://user:pass@localhost:port/database');
     //poolSize is reserved connections for application
-
-    var db = mongoose.connection;
-
-    db.on('error', console.error.bind(console, 'connection error:'));
-    db.once('open', function(err)
+    mongoose.connect('mongodb://localhost:27017/the_best_pictures', function()
     {
-        if (!err)
+        var db = mongoose.connection;
+
+        db.on('error', console.error.bind(console, 'connection error:'));
+        db.once('open', function(err)
         {
-            var new_girl = new girls();
-            new_girl.name = rand_name();
-            new_girl.rating = 1200;
-            new_girl.imgpath = rand_name() +"/" + rand_name() +"/" + rand_name();
-
-            try
+            if (!err)
             {
-                new_girl.save(function(err, subjs)
+                var new_girl = new girls();
+                new_girl.name = rand_name();
+                new_girl.rating = 1200;
+                new_girl.imgpath = rand_name() +"/" + rand_name() +"/" + rand_name();
+
+                try
                 {
-                    if (!err)
+                    new_girl.save(function(err, subjs)
                     {
-                        girls.count({}, function(err, cnt)
+                        if (!err)
                         {
-                            text += "Views: " + jint + "<br>";
+                            girls.count({}, function(err, cnt)
+                            {
+                                text += "Views: " + jint + "<br>";
 
-                            text += menu.draw();
+                                text += menu.draw();
 
-                            text += "<br><br>" + "from:" + req.connection.remoteAddress;
-                            text += "<br><br>"+"my_girls.length = " + cnt + "<br>";
-                            res.send(text);
+                                text += "<br><br>" + "from:" + req.connection.remoteAddress;
+                                text += "<br><br>"+"my_girls.length = " + cnt + "<br>";
+                                res.send(text);
 
-                            db.close();
-                        });
-                    }
-                    else
-                    {
-                        console.log(err);
-                    }
-                });
+                                db.close();
+                            });
+                        }
+                        else
+                        {
+                            console.log(err);
+                        }
+                    });
+                }
+                catch (e)
+                {
+                    console.log(e);
+                }
+
             }
-            catch (e)
-            {
-                console.log(e);
-            }
-
-        }
+        });
     });
 };

@@ -18,29 +18,31 @@ exports.removeid = function(req, res){
 
     jint++;
 
-    mongoose.connect('mongodb://localhost:27017/the_best_pictures'); // ?poolSize=4');   // example ('mongodb://user:pass@localhost:port/database');
+    // ?poolSize=4');   // example ('mongodb://user:pass@localhost:port/database');
     //poolSize is reserved connections for application
-
-    var db = mongoose.connection;
-
-    db.on('error', console.error.bind(console, 'connection error:'));
-    db.once('open', function(err)
+    mongoose.connect('mongodb://localhost:27017/the_best_pictures', function()
     {
-        if (!err)
+        var db = mongoose.connection;
+
+        db.on('error', console.error.bind(console, 'connection error:'));
+        db.once('open', function(err)
         {
-            picts.remove({_id: req.params.id},function(err, upd_cnt)
+            if (!err)
+            {
+                picts.remove({_id: req.params.id},function(err, upd_cnt)
                 {
-                if (upd_cnt > 0)
-                {
-                    res.redirect('/');
-                    db.close();
-                } else
-                {
-                    console.log("shlyapa, upd_cnt == 0, id: ijf2093j0f92j3f092j0932jf");
-                    res.redirect('/');
-                    db.close();
-                }
-            });
-        }
+                    if (upd_cnt > 0)
+                    {
+                        res.redirect('/');
+                        db.close();
+                    } else
+                    {
+                        console.log("shlyapa, upd_cnt == 0, id: ijf2093j0f92j3f092j0932jf");
+                        res.redirect('/');
+                        db.close();
+                    }
+                });
+            }
+        });
     });
 };
