@@ -39,37 +39,41 @@ exports.getfile = function(req, res){
 
         fs.writeFile(newpath, data, function (err)
         {
-            mongoose.connect('mongodb://localhost:27017/the_best_pictures'); // ?poolSize=4');   // example ('mongodb://user:pass@localhost:port/database');
+            // ?poolSize=4');   // example ('mongodb://user:pass@localhost:port/database');
             //poolSize is reserved connections for application
-
-            var db = mongoose.connection;
-
-            db.on('error', console.error.bind(console, 'connection error:'));
-            db.once('open', function(err)
+            mongoose.connect('mongodb://localhost:27017/the_best_pictures', function()
             {
-                if (!err)
+                var db = mongoose.connection;
+
+                db.on('error', console.error.bind(console, 'connection error:'));
+                db.once('open', function(err)
                 {
-                    var new_pict = new picts();
-                    new_pict.name = name;
-                    new_pict.rating = rating;
-                    new_pict.imgpath = newurl;
-
-                    new_pict.save(function(err, subjs)
+                    if (!err)
                     {
-                        if (!err)
+                        var new_pict = new picts();
+                        new_pict.name = name;
+                        new_pict.rating = rating;
+                        new_pict.imgpath = newurl;
+
+                        new_pict.save(function(err, subjs)
                         {
-                            db.close();
-                            res.redirect("/");
-                        }
-                        else
-                        {
-                            console.log(err);
-                        }
-                    });
+                            if (!err)
+                            {
+                                db.close();
+                                res.redirect("/");
+                            }
+                            else
+                            {
+                                console.log(err);
+                            }
+                        });
 
 
-                }
+                    }
+                });
             });
+
+
         });
 
 

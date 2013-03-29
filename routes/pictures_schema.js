@@ -8,7 +8,9 @@ module.exports = function()
         var pictures = new mongoose.Schema({
             name:  String,
             rating: Number,
-            imgpath: String
+            imgpath: String,
+            imgsrc: String,
+            imgprefix: String
         });
     }
 

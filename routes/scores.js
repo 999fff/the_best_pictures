@@ -54,8 +54,16 @@ exports.scores = function(req, res){
                                 for (var i =0; i < my_picts.length; i++)
                                 {
                                     //text += my_picts[i].name + " " + my_picts[i].rating + "<br>";
+                                    var img1src, isBase64 = true;
+                                    if (isBase64)
+                                    {
+                                        img1src = my_picts[i].imgprefix + my_picts[i].imgsrc;
+                                    } else
+                                    {
+                                        img1src = my_picts[i].imgpath;
+                                    }
                                     text += "<tr>";
-                                    text += "<td align='center'><img src='" + my_picts[i].imgpath + "' height='150px'></td>";
+                                    text += "<td align='center'><img src='" + img1src + "' height='150px'></td>";
                                     text += "<td>" + my_picts[i].name + "</td>";
                                     text += "<td>" + my_picts[i].rating + "</td>";
                                     text += "</tr>";

@@ -16,7 +16,10 @@ var express = require('express')
     , add1 = require('./routes/add1.js')
     , getfile = require('./routes/getfile.js')
     , removeid = require('./routes/removeid.js')
-    , removeall = require('./routes/removeall.js');
+    , removeall = require('./routes/removeall.js')
+    , dragdrop = require('./routes/dragdrop.js')
+    , getfile_b64 = require('./routes/getfile_b64.js')
+    , upgrade_data_to_base64 = require('./routes/upgrade_data_to_base64.js');
 
 var app = express();
 
@@ -48,6 +51,9 @@ app.get('/add_random', add_random.add_random);
 app.post('/getfile', getfile.getfile);
 app.get('/removeid/:id', removeid.removeid);
 app.get('/removeall', removeall.removeall);
+app.get('/dragdrop', dragdrop.dragdrop);
+app.post('/getfile_b64', getfile_b64.getfile_b64);
+app.get('/upgrade_data_to_base64', upgrade_data_to_base64.upgrade_data_to_base64);
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log("Express server listening on port " + app.get('port'));

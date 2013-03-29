@@ -6,5 +6,7 @@ exports.draw = function()
     //text += "<a href='/add_random'>add1_random</a>" + "<br>";
     text += "<div align='center'><a href='/add1'>add1</a></div>" + "<br>";
     //text += "<div align='center'>" + new Date() + "</div><br>";
+
+    text += "<div align='center'><a href='/dragdrop'>dragdrop</a></div>" + "<br>";
     return text;
 }

@@ -1,10 +1,4 @@
-var mongoose = require('mongoose');
-
-// init all models
-require('./models_init.js').do();
-
 var menu = require('./gui_menu.js');
-var Aos_subject;
 var jint = new Number(0);
 
 function rand_name()
@@ -33,12 +27,9 @@ exports.add1 = function(req, res){
 
     var text = "";
 
-    var name = 'pictures';
-    picts = mongoose.model(name);
-
     jint++;
 
-    text += "<form action='/getfile' method='post' enctype='multipart/form-data'>";
+    text += "<form action='/getfile_b64' method='post' enctype='multipart/form-data'>";
     text += "Add new picture<br>";
     text += "<input name='name' type='text' ></input> <br>"
     text += "<input name='image' type='file' ></input> <br>"

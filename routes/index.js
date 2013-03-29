@@ -62,9 +62,20 @@ exports.fight = function(req, res){
                         text += "<td align='center'>" + my_picts[ind2].rating + " pts.</td>";
                         text += "</tr>";
                         text += "<tr>";
-                        text += "<td align='center'>" + "<img src='" + my_picts[ind1].imgpath + "' height='300px'>" + "</td>";
+
+                        var img1src, img2src, isBase64 = true;
+                        if (isBase64)
+                        {
+                            img1src = my_picts[ind1].imgprefix + my_picts[ind1].imgsrc;
+                            img2src = my_picts[ind2].imgprefix + my_picts[ind2].imgsrc;
+                        } else
+                        {
+                            img1src = my_picts[ind1].imgpath;
+                            img2src = my_picts[ind2].imgpath;
+                        }
+                        text += "<td align='center'>" + "<img src='" + img1src + "' height='300px'>" + "</td>";
                         text += "<td></td>";
-                        text += "<td align='center'>" + "<img src='" + my_picts[ind2].imgpath + "' height='300px'>" + "</td>";
+                        text += "<td align='center'>" + "<img src='" + img2src + "' height='300px'>" + "</td>";
                         text += "</tr>";
                         text += "<tr>";
                         text += "<td align='center'>" + "<font size='5'><a href=\"/votefor/"+my_picts[ind1]._id+"/"+my_picts[ind1].rating+"/"+my_picts[ind2]._id+"/"+my_picts[ind2].rating+"\">This!</a> " + "</font></td>";
